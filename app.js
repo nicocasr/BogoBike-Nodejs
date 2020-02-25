@@ -41,7 +41,7 @@ mongoose.set('useUnifiedTopology', true);
 
 // mongoose.connect("mongodb://localhost/bogobike");
 mongoose.connect(
-    process.env.DATABASEURL || 'mongodb://localhost/bogobike', 
+    process.env.DATABASEURL || 'mongodb+srv://nicocasr:39621798@bogobike-dj6mi.mongodb.net/test?retryWrites=true&w=majority', 
     {
         useNewUrlParser: true,
         useCreateIndex: true
