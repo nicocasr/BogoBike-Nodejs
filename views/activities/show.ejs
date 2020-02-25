@@ -1,0 +1,170 @@
+<%- include('../partials/header') %>
+
+    <div class="container-fluid p-5">
+        <div class="row pb-2">
+            <button class="btn btn-warning btn-lg btn-block" type="button" data-toggle="collapse" data-target="#BikeTrips" aria-expanded="false" aria-controls="BikeTrips">Bike Trips</button>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="collapse multi-collapse" id="BikeTrips">
+                    <div class="card text-center">
+                        <div class="card card-body">
+                            <button class="btn btn-warning mb-2" type="button" data-toggle="collapse" data-target="#Rookie" aria-expanded="false" aria-controls="Rookie">
+                                Rookie
+                            </button>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="collapse multi-collapse" id="Rookie">
+                                        <div class="card text-center">
+                                            <div class="card card-body">
+                                                <table class="table">
+                                                    <tr>
+                                                        <th>Activity Date</th>
+                                                        <th>Start Point</th>
+                                                        <th>End Point</th>
+                                                        <th>Organizer</th>
+                                                        <th>Description</th>
+                                                        <th>Image of reference</th>
+                                                    </tr>
+                                                    <% foundActivities.forEach(activity => { %>
+                                                        <% if(activity.type == 'bike trip' && activity.complexity == 'rookie') { %>
+                                                            <tr>
+                                                                <td>
+                                                                    <%= activity.date.toLocaleString() %> 
+                                                                </td>
+                                                                <td>
+                                                                    <%= activity.startPoint %> 
+                                                                </td>
+                                                                <td>
+                                                                    <%= activity.endPoint %> 
+                                                                </td>
+                                                                <td>
+                                                                    <%= activity.organizer %> 
+                                                                </td>
+                                                                <td>
+                                                                    <%= activity.description %> 
+                                                                </td>
+                                                                <td>
+                                                                    <img src="/images/events/<%= activity.img %>">
+                                                                </td>
+                                                            </tr>
+                                                        <% } %>
+                                                    <% }); %>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button class="btn btn-warning" type="button" data-toggle="collapse" data-target="#Expert" aria-expanded="false" aria-controls="Expert">
+                                Expert
+                            </button>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="collapse multi-collapse" id="Expert">
+                                        <div class="card text-center">
+                                            <div class="card card-body">
+                                                <table class="table">
+                                                    <tr>
+                                                        <th>Activity Date</th>
+                                                        <th>Start Point</th>
+                                                        <th>End Point</th>
+                                                        <th>Organizer</th>
+                                                        <th>Description</th>
+                                                        <th>Image of reference</th>
+                                                    </tr>
+                                                    <% foundActivities.forEach(activity => { %>
+                                                        <% if(activity.type == 'bike trip' && activity.complexity == 'expert') { %>
+                                                            <tr>
+                                                                <td>
+                                                                    <%= activity.date.toLocaleString() %> 
+                                                                </td>
+                                                                <td>
+                                                                    <%= activity.startPoint %> 
+                                                                </td>
+                                                                <td>
+                                                                    <%= activity.endPoint %> 
+                                                                </td>
+                                                                <td>
+                                                                    <%= activity.organizer %> 
+                                                                </td>
+                                                                <td>
+                                                                    <%= activity.description %> 
+                                                                </td>
+                                                                <td>
+                                                                    <img src="/images/events/<%= activity.img %>">
+                                                                </td>
+                                                            </tr>
+                                                        <% } %>
+                                                    <% }); %>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <button class="btn btn-warning btn-lg btn-block" type="button" data-toggle="collapse" data-target="#Events" aria-expanded="false" aria-controls="Events">Events</button>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="collapse multi-collapse" id="Events">
+                    <div class="card text-center">
+                        <div class="card card-body">
+                            <table class="table">
+                                <tr>
+                                    <th>Activity Date</th>
+                                    <th>Start Point</th>
+                                    <th>End Point</th>
+                                    <th>Organizer</th>
+                                    <th>Description</th>
+                                    <th>Image of reference</th>
+                                </tr>
+                                <% foundActivities.forEach(activity => { %>
+                                    <% if(activity.type == 'event') { %>
+                                        <tr>
+                                            <td>
+                                                <%= activity.date.toLocaleString() %> 
+                                            </td>
+                                            <td>
+                                                <%= activity.startPoint %> 
+                                            </td>
+                                            <td>
+                                                <%= activity.endPoint %> 
+                                            </td>
+                                            <td>
+                                                <%= activity.organizer %> 
+                                            </td>
+                                            <td>
+                                                <%= activity.description %> 
+                                            </td>
+                                            <td>
+                                                <img src="/images/events/<%= activity.img %>">
+                                            </td>
+                                        </tr>
+                                    <% } %>
+                                <% }); %>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    
+
+    <div class="container pb-4">
+        <div class="text-center">
+            <a href="/activities/new" class="btn btn-warning">Share New Event</a>
+        </div>
+    </div>
+
+<%- include('../partials/footer') %>

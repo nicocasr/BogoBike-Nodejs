@@ -1,0 +1,23 @@
+<%- include('../partials/header') %>
+
+    <div class="container py-5">
+        <div class="row justify-content-md-center">
+            <form action="/notifications" method="POST" id="notify">
+                <div class="form-group">
+                <select autofocus class="form-control" name="notification" placeholder="notify">
+                    <option disabled selected>Notification</option>
+                    <option value="Stranded">Stranded</option>
+                    <option value="Robbed">Robbed</option>
+                    <option value="Road Being Repaired">Road being repaired</option>
+                    <option value="Crash">Crash</option>
+                    <option value="Roadblock">Roadblock</option>
+                </select>
+                </div>
+                <div class="col text-center">
+                    <button class="btn btn-warning" type="submit" id="notify_button">Notify</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+<%- include('../partials/footer') %>

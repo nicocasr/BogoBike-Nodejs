@@ -1,0 +1,89 @@
+<%- include('../partials/header') %>
+
+    <div class="container py-5">
+        <div id="map">
+        </div>
+    </div>
+
+    <script>
+
+        // Initialize and add the map
+        function initMap() {
+            // My position
+            var position = JSON.parse('<%- geo %>');
+            var myposition = {lat: position.ll[0], lng: position.ll[1]};
+            // {lat: 4.687201, lng: -74.049239};
+            // The map, centered at myposition
+            var map = new google.maps.Map(document.getElementById('map'), {zoom: 16, center: myposition});
+            // The marker, positioned at myposition
+            //var marker = new google.maps.Marker({position: myposition, map: map});
+            setMarkers(map);
+
+            infoWindow = new google.maps.InfoWindow;
+
+            // Try HTML5 geolocation.
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function (position) {
+                    var pos = {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude
+                    };
+
+                    infoWindow.setPosition(pos);
+                    infoWindow.setContent('Location found.');
+                    infoWindow.open(map);
+                    map.setCenter(pos);
+                }, function () {
+                    handleLocationError(true, infoWindow, map.getCenter());
+                });
+            } else {
+                // Browser doesn't support Geolocation
+                handleLocationError(false, infoWindow, map.getCenter());
+            }
+        }
+
+        function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+            infoWindow.setPosition(pos);
+            infoWindow.setContent(browserHasGeolocation ?
+                'Error: The Geolocation service failed.' :
+                'Error: Your browser doesn\'t support geolocation.');
+            infoWindow.open(map);
+        }
+
+        function setMarkers(map) {
+            var shopImage = '/images/bike-shop.png';
+            var shops = JSON.parse('<%- stores %>');
+            var activeinfowindow;
+            for (var i = 0; i < shops.length; i++) {
+                let point = shops[i];
+                let contentString = `<div id="content">
+                    <h1 id="firstHeading" class="firstHeading"> ${point['storeName']} </h1>
+                    myposition   <div id="bodyContent"> <b> ${point['storeAddress']} </b> </div>
+                    </div>`;
+                let infowindow = new google.maps.InfoWindow({
+                    content: contentString,
+                    maxWidth: 180
+                });
+                let marker = new google.maps.Marker({
+                    position: {lat: point['storeLatitude'], lng: point['storeLongitude']},
+                    map: map,
+                    icon: shopImage,
+                    title: point['storeName'],
+                    draggable: true,
+                    animation: google.maps.Animation.DROP
+                });
+                marker.addListener('click', function () {
+                    if (activeinfowindow) {
+                        activeinfowindow.close();
+                    }
+                    infowindow.open(map, marker);
+                    activeinfowindow = infowindow;
+                });
+            }
+        }
+    </script>
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD86jevTtP1vkg95TkY9i7hGA0045N7Fj4&callback=initMap">
+    </script>
+
+<%- include('../partials/footer') %>

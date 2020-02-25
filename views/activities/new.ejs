@@ -1,0 +1,95 @@
+<%- include('../partials/header') %>
+
+    <div class="container py-4">
+        <div class="row justify-content-md-center pb-4">
+            <h2 class="text-center">
+                <span class="text-warning">C</span><span class="text-danger">o</span><span class="text-warning">m</span><span class="text-danger">p</span><span class="text-warning">l</span><span class="text-danger">e</span><span class="text-warning">t</span><span class="text-danger">e</span>
+                <span class="text-warning">T</span><span class="text-danger">h</span><span class="text-warning">i</span><span class="text-danger">s</span>
+                <span class="text-warning">F</span><span class="text-danger">o</span><span class="text-warning">r</span><span class="text-danger">m</span>
+            </h2>
+        </div>
+        <div class="row justify-content-md-center">
+            <form action="/activities" method="POST" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="typeOfActivity">Select type of activity</label>
+                    <select required class="form-control" id="typeOfActivity" name="type">
+                        <option value="">Select option</option>
+                        <option value="bike trip">Bike Trip</option>
+                        <option value="event">Event</option>
+                    </select>
+                </div>
+                <div class="form-row mb-3">
+                    <div class="col-md-4">
+                        <label for="startPoint">Start Point</label>
+                        <input id="startPoint" type="text" name="startPoint" class="form-control" placeholder="Where it starts" required>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="endPoint">End Point</label>
+                        <input id="endPoint" type="text" name="endPoint" class="form-control" placeholder="Where it ends" required>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="organizer">Organizer</label>
+                        <input id="organizer" type="text" name="organizer" class="form-control" placeholder="Organizer" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="complexity">* Complexity of the trip</label>
+                    <select required class="form-control" name="complexity" id="complexity">
+                        <option value="">Select option</option>
+                        <option value="rookie">Rookie</option>
+                        <option value="expert">Expert</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="dateTime">Date and time of activity</label>
+                    <input id="dateTime" type="datetime-local" name="date" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea id="description" class="form-control" name="description" rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="file">Add an image </label>
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="file" name="file" required>
+                        <label class="custom-file-label" for="file">Choose file</label>
+                    </div>
+                </div>
+                <div class="form-row text-center">
+                    <div class="col-12">
+                        <button class="btn btn-warning" type="submit" id="share">Share</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        $('#file').on('change', function () {
+            //get the file name
+            var fileName = $(this).val().replace('C:\\fakepath\\', "");
+            //replace the "Choose a file" label
+            $(this).next('.custom-file-label').html(fileName);
+        })
+
+
+        $(document).ready(function () {
+            //alert('Document is ready');
+            $('#typeOfActivity').change(function () {
+                var sel = $(this).val();
+                if (sel == 'bike trip') $('#complexity').show();
+            });
+
+            $('#share').click(function () {
+                var sel = $('#typeOfActivity').val();
+                if (sel == 'bike trip') {
+                    if ($('#complexity').val() == '') {
+                        alert('Please fill the complexity');
+                        return false; //prevent submit from submitting
+                    }
+                }
+            });
+        });
+    </script>
+
+<%- include('../partials/footer') %>

@@ -1,0 +1,44 @@
+<%- include('./partials/header') %>
+
+<div class="container">
+    <div class="row justify-content-md-center">
+        <form action="/register" method="POST" class="py-5">
+            <div class="form-group">
+                <div class="col align-self-center">
+                    <input autocomplete="off" autofocus class="form-control" name="username" id="casta" placeholder="Username" type="text" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col align-self-center">
+                    <input autocomplete="off" class="form-control" name="name" placeholder="Name" type="text" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col align-self-center">
+                    <input autocomplete="off" class="form-control" name="city" placeholder="City" type="text" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col align-self-center">
+                    <input autocomplete="off" class="form-control" name="address" placeholder="Address" type="text" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col align-self-center">
+                    <input class="form-control" name="email" placeholder="E-mail" type="email" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col align-self-center">
+                    <input class="form-control" name="password" placeholder="Password" type="password" required>
+                </div>
+            </div>
+            <div class="col text-center">
+                <button class="btn btn-warning" type="submit">Sign Up</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<%- include('./partials/footer') %>

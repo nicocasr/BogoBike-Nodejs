@@ -1,0 +1,30 @@
+<%- include('../partials/header') %>
+
+<div class="container py-4">
+    <table class="table">
+        <tr class="bg-warning">
+            <th scope="col">Name</th>
+            <th scope="col">Address</th>
+            <th scope="col">Latitude</th>
+            <th scope="col">Longitude</th>
+        </tr>
+        <% stores.forEach(store => { %>
+        <tr>
+            <td>
+                <%= store.storeName %>
+            </td>
+            <td>
+                <%= store.storeAddress %>
+            </td>
+            <td>
+                <%= store.storeLatitude %>
+            </td>
+            <td>
+                <%= store.storeLongitude %>
+            </td>
+        </tr>
+        <% }); %>
+    </table>
+</div>
+
+<%- include('../partials/footer') %>

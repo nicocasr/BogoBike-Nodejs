@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BogoBike</title>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/b58d696fc6.js" crossorigin="anonymous"></script>
+
+
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/stylesheets/main.css">
+    <link rel="stylesheet" href="/stylesheets/notifications.css">
+    <link rel="icon" href="/images/escudo.ico">
+</head>
+<body>
+    <nav class="navbar navbar-expand-md navbar-light bg-light border py-0">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/map">
+                <img src="/images/bike.png" hspace="5" width="45" height="40">
+                <span class="text-warning">B</span>
+                <span class="text-danger">O</span>
+                <span class="text-warning">G</span>
+                <span class="text-danger">O</span>
+                <span class="text-warning">B</span>
+                <span class="text-danger">I</span>
+                <span class="text-warning">K</span>
+                <span class="text-danger">E</span>
+            </a>
+            <ul class="dots">
+                <% if(currentUser){ %>
+                <li class="pt-2 pb-0">
+                    <a onclick="openList()">
+                        <span class="far fa-bell py-0">
+                            <mark class="rubberBand">
+                                <p id="num">0</p>
+                            </mark>
+                            <div id="notificationList" style="display: none;" class="list-group">
+                            </div>
+                        </span>
+                    </a>
+                </li>
+                <% } %>
+            </ul>
+            <button class="navbar-toggler" data-toggle="collapse" data-target="#navLinks" aria-controls="navLinks" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navLinks">
+                <ul class="navbar-nav ml-auto">
+                    <% if(!currentUser){ %>
+                    <li class="nav-item">
+                        <a href="/login" class="nav-link">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/register" class="nav-link">Sign Up</a>
+                    </li>
+                    <% } else { %>
+                    <li class="nav-item">
+                        <a href="/notifications" class="nav-link">Send Alert</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/stores" class="nav-link">Bike Stores</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Activities
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="/activities">Find Activity</a>
+                            <a class="dropdown-item" href="/activities/new">Post Activity</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/logout" class="nav-link">Logout</a>
+                    </li>
+                    <% } %>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <% if(error && error.length > 0){ %>
+            <div class="alert alert-danger" role="alert">
+                <%= error %>
+            </div>
+        <% } %>
+        <% if(success && success.length > 0){ %>
+            <div class="alert alert-success" role="alert">
+                <%= success %>
+            </div>
+        <% } %>
+    </div>
+
+
+    <script>
+
+        function openList() {
+            var list = document.getElementById("notificationList");
+    
+            if (list.style.display == "none") {
+                list.style.display = "block";
+            } else {
+                list.style.display = "none";
+            }
+        }
+    
+        var notificationFunction = function checkNotif(result) {
+            // var notificationId;
+            if (result == 0) {
+                let count = 0;
+                document.getElementById("num").innerHTML = count;
+                document.getElementById("notificationList").innerHTML = "<li class='list-group-item list-group-item-action list-group-item-light'>There are no notifications</li>";
+            } else {
+                var arr = result;
+                let count = result.length;
+                document.getElementById("num").innerHTML = count;
+    
+                var elements = "";
+                for (var x in result) {
+                    notificationId = result[x].notificationId
+                    elements = elements + `<li class='list-group-item list-group-item-action list-group-item-light'>${result[x].user}, ${result[x].info}, ${result[x].city} <button onclick="removeItem('${notificationId}')">x</button></li>`;
+                }
+                document.getElementById("notificationList").innerHTML = elements;
+            }
+    
+        };
+    
+        function removeItem(notificationId) {
+            $.post("/notifications/removeNotification", {notificationId: notificationId})
+        };
+    
+        window.setInterval(function () {
+            $.get("/notifications/checkNotifications", notificationFunction);
+        }, 3000);
+    
+    
+    </script>
