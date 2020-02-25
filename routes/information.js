@@ -12,9 +12,14 @@ router.get("/map", function(req, res){
             console.log(err);
         } else {
             var stores = JSON.stringify(allstores);
-            var geo = JSON.stringify(geopip.lookup('186.154.57.7'));
+            // var geo = JSON.stringify(geopip.lookup('186.154.57.7'));
+            console.log(req.connection.remoteAddress);
+            // console.log(geo);
+            var geo = geopip.lookup(req.connection.remoteAddress);
             if(geo === null){
-                let geo = {lat: 4.6807434, lon: -74.084748}
+                let geo = JSON.stringify({ll: [4.6807434, -74.084748]});
+                console.log(geo);
+                return res.render("information/map", {stores, geo}); 
             } 
             res.render("information/map", {stores, geo});
         }
