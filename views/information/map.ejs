@@ -14,10 +14,10 @@
             var myposition = {lat: position.ll[0], lng: position.ll[1]};
             // {lat: 4.687201, lng: -74.049239};
             // The map, centered at myposition
-            var map = new google.maps.Map(document.getElementById('map'), {zoom: 16, center: myposition});
+            // var map = new google.maps.Map(document.getElementById('map'), {zoom: 16, center: myposition});
             // The marker, positioned at myposition
-            var marker = new google.maps.Marker({position: myposition, map: map});
-            setMarkers(map);
+            // var marker = new google.maps.Marker({position: myposition, map: map});
+            // setMarkers(map);
 
             infoWindow = new google.maps.InfoWindow;
 
@@ -29,6 +29,9 @@
                         lng: position.coords.longitude
                     };
 
+                    var map = new google.maps.Map(document.getElementById('map'), {zoom: 16, center: myposition});
+                    var marker = new google.maps.Marker({position: pos, map: map});
+                    setMarkers(map);
                     infoWindow.setPosition(pos);
                     infoWindow.setContent('Location found.');
                     infoWindow.open(map);
